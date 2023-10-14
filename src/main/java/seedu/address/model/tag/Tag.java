@@ -10,6 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric";
+    public static final String MESSAGE_TAG_NOT_IN_TAGLIST =
+            "Tag not in tag list. Please add the tag using 'add_tag' command to continue.";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;

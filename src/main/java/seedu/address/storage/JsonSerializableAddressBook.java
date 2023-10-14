@@ -21,11 +21,8 @@ import seedu.address.model.tag.Tag;
 class JsonSerializableAddressBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
-
     public static final String MESSAGE_DUPLICATE_TAG = "Tags list contains duplicate tags(s).";
-
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
-
     private final List<JsonAdaptedTag> tagList = new ArrayList<>();
 
     /**

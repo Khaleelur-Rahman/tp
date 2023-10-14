@@ -2,8 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.tag.Tag.MESSAGE_TAG_NOT_IN_TAGLIST;
 
 import java.nio.file.Path;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -102,13 +105,12 @@ public class ModelManager implements Model {
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
-
     @Override
-    public void addPerson(Person person) {
+    public void addPerson(Person person) throws CommandException {
+        checkIfTagsArePresentInTagList(person.getTags());
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
-
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
@@ -142,6 +144,18 @@ public class ModelManager implements Model {
         addressBook.setTag(target, editedTag);
     }
 
+    /**
+     * Method to check if the {@code person}'s tags are present in the model's tag list.
+     * If not present, the method will throw an error
+     * @param tags List of tags present in the model's tag list
+     */
+    public void checkIfTagsArePresentInTagList(Set<Tag> tags) throws CommandException {
+        for (Tag tagToCheck : tags) {
+            if (!filteredTags.contains(tagToCheck)) {
+                throw new CommandException(String.format(tagToCheck + ": " + MESSAGE_TAG_NOT_IN_TAGLIST));
+            }
+        }
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 

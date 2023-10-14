@@ -126,7 +126,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Adds a tag to the address book.
+     * Adds a {@code tag} to the address book.
      * The tag must not already exist in the address book.
      */
     public void addTag(Tag p) {

@@ -40,10 +40,23 @@ public class SampleDataUtil {
         };
     }
 
+    public static Tag[] getSampleTags() {
+        return new Tag[]{
+            new Tag("family"),
+            new Tag("colleagues"),
+            new Tag("classmates"),
+            new Tag("friends"),
+            new Tag("neighbours")
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
+        }
+        for (Tag sampleTag : getSampleTags()) {
+            sampleAb.addTag(sampleTag);
         }
         return sampleAb;
     }

@@ -79,7 +79,7 @@ public class AddressBookParser {
         case DeleteTagCommand.COMMAND_WORD:
             return new DeleteTagCommandParser().parse(arguments);
 
-        case ExitCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD: 
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:

@@ -1,10 +1,11 @@
 package seedu.address.model;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalTags.VENUES;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.AddressBookBuilder;
@@ -75,6 +77,20 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void addPerson_tagNotPresentInAddressBook_throwsCommandException() {
+        //Empty taglist in model
+        assertThrows(CommandException.class, () -> modelManager.addPerson(ALICE));
+    }
+
+    @Test
+    public void addPerson_tagPresentInAddressBook_doesNotThrowException() {
+        //Add "friends tag into tag list"
+        modelManager.addTag(new Tag("friends"));
+        assertDoesNotThrow(() -> modelManager.addPerson(ALICE));
+    }
+
+
+    @Test
     public void hasPerson_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
     }
@@ -85,7 +101,8 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasPerson_personInAddressBook_returnsTrue() throws CommandException {
+        modelManager.addTag(new Tag("friends"));
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
     }
